@@ -1,0 +1,118 @@
+Table Album {
+  album_id int pk 
+  title varchar
+  artist_id int
+}
+
+Table Artist {
+  artist_id int pk
+  name varchar
+}
+
+Table Customer {
+  customer_id int pk
+  first_name varchar
+  last_name varchar
+  company varchar
+  address varchar
+  city varchar
+  state varchar
+  country varchar
+  postal_code varchar
+  phone varchar
+  fax varchar
+  email varchar
+  support_rep_id int
+}
+
+Table Employee {
+  employee_id int pk
+  last_name varchar
+  first_name varchar
+  title varchar
+  reports_to int
+  birth_date timestamp
+  hire_date timestamp
+  address varchar
+  city varchar
+  state varchar
+  country varchar
+  postal_code varchar
+  phone varchar
+  fax varchar
+  email varchar
+}
+
+Table Genre {
+  genre_id int pk
+  name varchar
+}
+
+Table Invoice {
+  invoice_id int pk
+  customer_id int
+  invoice_date timestamp
+  billing_address varchar
+  billing_city varchar
+  billing_state varchar
+  billing_country varchar
+  billing_postal_code varchar
+  total numeric(10,2)
+}
+
+Table Invoice_Line {
+  invoice_line_id int pk
+  invoice_id int
+  track_id int
+  unit_price nemeric(10,2)
+  quantity int
+}
+
+Table Media_Type {
+  media_type_id int pk
+  name varchar
+}
+
+Table Playlist {
+  playlist_id int pk
+  name varchar
+}
+
+Table Playlist_Track {
+  playlist_id pk
+  track_id int
+}
+
+Table Track {
+  track_id int pk
+  name varchar
+  album_id int
+  media_type_id int
+  genre_id int
+  composer varchar
+  milliseconds int
+  bytes int
+  unit_price numeric(10,2)
+}
+
+Ref: "Artist"."artist_id" < "Album"."artist_id"
+
+Ref: "Employee"."employee_id" < "Customer"."support_rep_id"
+
+Ref: "Album"."album_id" < "Track"."album_id"
+
+Ref: "Invoice"."invoice_id" < "Invoice_Line"."invoice_id"
+
+Ref: "Track"."track_id" < "Invoice_Line"."track_id"
+
+Ref: "Genre"."genre_id" < "Track"."genre_id"
+
+Ref: "Playlist"."playlist_id" < "Playlist_Track"."playlist_id"
+
+Ref: "Track"."track_id" < "Playlist_Track"."track_id"
+
+Ref: "Media_Type"."media_type_id" < "Track"."media_type_id"
+
+Ref: "Employee"."employee_id" < "Employee"."reports_to"
+
+Ref: "Customer"."customer_id" < "Invoice"."customer_id"
